@@ -1,1 +1,97 @@
+# Compila o CultoScript7 e anexa o instalador à Release.
+#
+# Como usar: no GitHub, crie e publique uma Release com uma tag no formato
+# v1.2.3 (Releases → Draft a new release). Este workflow roda sozinho,
+# compila numa máquina Windows e anexa o CultoScript7-Setup.exe à Release.
+#
+# Assinatura (SignPath Foundation): quando o projeto for aprovado, cadastre em
+# Settings → Secrets and variables → Actions:
+#   Secret:    SIGNPATH_API_TOKEN
+#   Variables: SIGNPATH_ORGANIZATION_ID, SIGNPATH_PROJECT_SLUG, SIGNPATH_POLICY_SLUG
+# Sem o secret, o instalador é publicado sem assinatura.
+#
+# Também dá para rodar manualmente (Actions → Release → Run workflow) para
+# testar o build; nesse caso o instalador fica só como artefato do workflow.
 
+name: Release
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    env:
+      SIGNPATH_API_TOKEN: ${{ secrets.SIGNPATH_API_TOKEN }}
+
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Instalar o Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache-dependency-path: go.sum
+
+      - name: Rodar os testes
+        run: go test ./...
+
+      - name: Instalar a CLI do Wails v3
+        run: go install github.com/wailsapp/wails/v3/cmd/wails3@v3.1.0
+
+      - name: Garantir o NSIS
+        shell: pwsh
+        run: |
+          if (-not (Test-Path "${env:ProgramFiles(x86)}\NSIS\makensis.exe")) {
+            choco install nsis -y --no-progress
+          }
+
+      - name: Definir a versão
+        shell: pwsh
+        run: |
+          $tag = "${{ github.event.release.tag_name }}"
+          $versao = if ($tag -match '^v?(\d+\.\d+\.\d+)$') { $Matches[1] } else { "0.0.0" }
+          "VERSAO=$versao" | Out-File $env:GITHUB_ENV -Append -Encoding utf8
+          Write-Host "Versão: $versao"
+
+      - name: Compilar app e instalador
+        shell: pwsh
+        run: .\build.ps1 -Instalador -Versao $env:VERSAO
+
+      - name: Guardar instalador (sem assinatura)
+        id: sem-assinatura
+        uses: actions/upload-artifact@v4
+        with:
+          name: CultoScript7-Setup
+          path: bin/CultoScript7-Setup.exe
+          if-no-files-found: error
+
+      - name: Assinar com SignPath
+        if: env.SIGNPATH_API_TOKEN != ''
+        uses: signpath/github-action-submit-signing-request@v1
+        with:
+          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          organization-id: ${{ vars.SIGNPATH_ORGANIZATION_ID }}
+          project-slug: ${{ vars.SIGNPATH_PROJECT_SLUG }}
+          signing-policy-slug: ${{ vars.SIGNPATH_POLICY_SLUG }}
+          github-artifact-id: ${{ steps.sem-assinatura.outputs.artifact-id }}
+          wait-for-completion: true
+          output-artifact-directory: assinado
+
+      - name: Usar o instalador assinado
+        if: env.SIGNPATH_API_TOKEN != ''
+        shell: pwsh
+        run: Copy-Item assinado\CultoScript7-Setup.exe bin\CultoScript7-Setup.exe -Force
+
+      - name: Anexar à Release
+        if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.release.tag_name }}
+          files: bin/CultoScript7-Setup.exe
