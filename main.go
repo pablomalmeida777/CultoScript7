@@ -23,6 +23,9 @@ var trayClaro []byte
 //go:embed icons/tray-escuro.png
 var trayEscuro []byte
 
+// versao é preenchida no build: go build -ldflags "-X main.versao=1.1.0"
+var versao = "dev"
+
 const (
 	nomeApp      = "CultoScript7"
 	urlProjeto   = "https://github.com/pablomalmeida777/CultoScript7"
@@ -376,6 +379,9 @@ func (c *CultoApp) AjustarAltura(h int) {
 	c.mu.Unlock()
 	c.aplicarTamanho()
 }
+
+// Versao devolve a versão do app (ex.: "1.1.0").
+func (c *CultoApp) Versao() string { return versao }
 
 // AbrirProjeto abre a página do projeto no GitHub no navegador padrão.
 func (c *CultoApp) AbrirProjeto() error { return c.app.Browser.OpenURL(urlProjeto) }

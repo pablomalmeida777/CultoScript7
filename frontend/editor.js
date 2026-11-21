@@ -32,26 +32,39 @@ let pagina = { tipo: "culto", id: null }; // ou { tipo: "aparencia" }
 
 // ── Salvamento automático ───────────────────────────────
 let timer = null;
+let pendente = false;
+
+async function enviar() {
+  const status = $("status");
+  pendente = false;
+  try {
+    const limpo = structuredClone(cfg);
+    for (const c of limpo.cultos) {
+      for (const s of c.secoes) s.itens = s.itens.map((t) => t.trim()).filter(Boolean);
+    }
+    await svc("Salvar", limpo);
+    status.className = "status";
+    status.textContent = "Salvo";
+  } catch (e) {
+    status.className = "status erro";
+    status.textContent = "Erro ao salvar";
+    console.error(e);
+  }
+}
+
 function salvar(imediato = false) {
   const status = $("status");
   status.className = "status salvando";
   status.textContent = "Salvando…";
+  pendente = true;
   clearTimeout(timer);
-  timer = setTimeout(async () => {
-    try {
-      const limpo = structuredClone(cfg);
-      for (const c of limpo.cultos) {
-        for (const s of c.secoes) s.itens = s.itens.map((t) => t.trim()).filter(Boolean);
-      }
-      await svc("Salvar", limpo);
-      status.className = "status";
-      status.textContent = "Salvo";
-    } catch (e) {
-      status.className = "status erro";
-      status.textContent = "Erro ao salvar";
-      console.error(e);
-    }
-  }, imediato ? 0 : 350);
+  timer = setTimeout(enviar, imediato ? 0 : 350);
+}
+
+// Grava já o que estiver pendente (antes de exportar/importar).
+async function salvarAgora() {
+  clearTimeout(timer);
+  if (pendente) await enviar();
 }
 
 // ── Lateral ─────────────────────────────────────────────
@@ -396,6 +409,44 @@ function ligar() {
     salvar(true);
     renderAparencia();
   });
+  // Exportar / importar
+  const aviso = (texto, tipo = "") => {
+    const a = $("aviso-backup");
+    a.textContent = texto;
+    a.className = `aviso ${tipo}`;
+    a.hidden = !texto;
+  };
+  const confirmar = (mostrar) => {
+    $("confirmar-importacao").hidden = !mostrar;
+    $("b-importar").hidden = mostrar;
+  };
+  $("b-exportar").addEventListener("click", async () => {
+    aviso("");
+    try {
+      await salvarAgora();
+      const caminho = await svc("ExportarCultos");
+      if (caminho) aviso(`Cultos exportados para ${caminho}`, "ok");
+    } catch (e) {
+      aviso(`Não foi possível exportar: ${e?.message ?? e}`, "erro");
+    }
+  });
+  $("b-importar").addEventListener("click", () => { aviso(""); confirmar(true); });
+  $("b-importar-cancelar").addEventListener("click", () => confirmar(false));
+  $("b-importar-confirmar").addEventListener("click", async () => {
+    try {
+      await salvarAgora();
+      const nova = await svc("ImportarCultos");
+      if (!nova) return; // cancelou a escolha do arquivo
+      cfg = nova;
+      confirmar(false);
+      const n = cfg.cultos.length;
+      aviso(`${n} ${n === 1 ? "culto importado" : "cultos importados"}.`, "ok");
+      renderLateral();
+    } catch (e) {
+      aviso(`Não foi possível importar: ${e?.message ?? e}`, "erro");
+    }
+  });
+
   $("link-projeto").addEventListener("click", (e) => { e.preventDefault(); svc("AbrirProjeto"); });
 }
 
@@ -410,6 +461,7 @@ function aplicarTemaEditor() {
 async function iniciar() {
   cfg = await svc("Config");
   aplicarTemaEditor();
+  svc("Versao").then((v) => { $("versao").textContent = v === "dev" ? "dev" : `v${v}`; });
   $("btn-tema").addEventListener("click", () => {
     cfg.editorTema = cfg.editorTema === "claro" ? "escuro" : "claro";
     // Transição suave entre os temas (cross-fade); instantânea se o

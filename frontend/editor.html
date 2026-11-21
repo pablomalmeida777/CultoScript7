@@ -11,7 +11,7 @@
     <div class="marca">
       <span class="sete">7</span>
       <div>
-        <strong>CultoScript7</strong>
+        <strong>CultoScript7 <span class="versao" id="versao"></span></strong>
         <small id="igreja-lateral"></small>
       </div>
     </div>
@@ -147,8 +147,25 @@
 
       <div class="cartao">
         <h2>Posição</h2>
-        <p class="nota">Com esta janela aberta, o widget fica com borda tracejada: arraste-o na área de trabalho para o lugar que quiser. A posição é salva ao soltar.</p>
+        <p class="nota">Com esta janela aberta, o widget mostra “Arraste para posicionar”: arraste-o na área de trabalho para o lugar que quiser. A posição é salva ao soltar.</p>
         <button class="btn-secundario" id="a-restaurar">Voltar ao canto superior direito</button>
+      </div>
+
+      <div class="cartao">
+        <h2>Exportar e importar cultos</h2>
+        <p class="nota">Salve os cultos num arquivo <code>.json</code> para guardar uma cópia, levar para outro computador ou compartilhar com outra igreja.</p>
+        <div class="linha-acoes">
+          <button class="btn-secundario" id="b-exportar">Exportar cultos…</button>
+          <button class="btn-secundario" id="b-importar">Importar cultos…</button>
+        </div>
+        <div class="confirmar-importacao" id="confirmar-importacao" hidden>
+          <span>A importação <strong>substitui todos os cultos atuais</strong>. Nome da igreja, cores e posição não mudam.</span>
+          <div class="linha-acoes">
+            <button class="btn-primario" id="b-importar-confirmar">Escolher arquivo…</button>
+            <button class="btn-fantasma" id="b-importar-cancelar">Cancelar</button>
+          </div>
+        </div>
+        <p class="aviso" id="aviso-backup" hidden></p>
       </div>
     </section>
   </main>

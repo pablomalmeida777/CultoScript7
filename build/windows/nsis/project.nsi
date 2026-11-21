@@ -9,7 +9,9 @@
 !define INFO_PROJECTNAME    "CultoScript7"
 !define INFO_COMPANYNAME    "Pablo Almeida"
 !define INFO_PRODUCTNAME    "CultoScript7"
-!define INFO_PRODUCTVERSION "1.0.0"
+!ifndef INFO_PRODUCTVERSION
+    !define INFO_PRODUCTVERSION "1.2.0"  # o build.ps1 passa a versão real (-DINFO_PRODUCTVERSION=...)
+!endif
 !define INFO_COPYRIGHT      "© 2026 Pablo Almeida · Licença MIT"
 !define PRODUCT_EXECUTABLE  "CultoScript7.exe"
 !define UNINST_KEY_NAME     "CultoScript7"

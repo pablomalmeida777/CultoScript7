@@ -49,6 +49,7 @@ Nasceu na IASD Solar Ville e está disponível de graça para **qualquer igreja*
 | Mudar o widget de lugar | Com o editor aberto, arraste o widget pela área de trabalho. A posição é salva ao soltar. |
 | Trocar o nome da igreja, as cores ou o tamanho | No editor, abra **Configurações**. |
 | Adicionar o culto de domingo ou quarta | No editor, clique em **+ Novo culto**. |
+| Fazer backup ou levar para outro PC | No editor, **Configurações → Exportar cultos…** / **Importar cultos…** |
 | Fechar o app | Menu → **Fechar CultoScript7**. Ele volta a abrir no próximo login. |
 
 **Atalhos no editor:** `Enter` cria a próxima etapa · `Backspace` numa etapa vazia apaga a linha · `Alt + ↑/↓` muda a etapa de posição · `↑/↓` navega entre as etapas.
@@ -65,15 +66,14 @@ O app vem com uma programação de sábado de exemplo (Escola Sabatina e Culto D
 2. Volte ao culto de **Sábado** e ajuste as seções e etapas.
 3. Se quiser, crie abas para os outros cultos da semana.
 
-### Levar a programação para outro computador
+### Backup, outro computador ou outra igreja
 
-As configurações ficam em um único arquivo:
+Em **Configurações → Exportar e importar cultos**:
 
-```
-%APPDATA%\CultoScript7\config.json
-```
+- **Exportar cultos…** salva todos os cultos num arquivo `.json`, no lugar que você escolher (pen drive, OneDrive, e-mail…).
+- **Importar cultos…** carrega esse arquivo em outro computador ou depois de reinstalar. A importação **substitui os cultos atuais**; o nome da igreja, as cores e a posição do widget não mudam.
 
-Copie esse arquivo para a mesma pasta no outro computador (com o app fechado) e pronto.
+Também dá para compartilhar a programação com outra igreja: ela importa o seu arquivo e ajusta o que precisar.
 
 ### Desinstalar
 
@@ -101,11 +101,21 @@ Depois, na raiz do projeto:
 .\build.ps1 -Instalador  # também gera bin\CultoScript7-Setup.exe (requer NSIS: winget install NSIS.NSIS)
 ```
 
+### Publicar uma versão
+
+O build oficial é feito pelo GitHub Actions ([`.github/workflows/release.yml`](.github/workflows/release.yml)):
+
+1. Em **Releases → Draft a new release**, crie uma tag no formato `v1.2.3` e publique.
+2. O workflow compila o app e o instalador no Windows, com a versão tirada da tag, e anexa o `CultoScript7-Setup.exe` à Release.
+
+A assinatura de código é feita pela [SignPath Foundation](https://signpath.org) quando as credenciais estão configuradas no repositório (veja o topo do workflow). Sem elas, o instalador é publicado sem assinatura.
+
 ### Estrutura
 
 ```
 main.go               app, janelas, bandeja e métodos chamados pelo JavaScript
 config.go             modelo de dados e gravação em %APPDATA%\CultoScript7\config.json
+backup.go             exportar/importar cultos (.json)
 desktop_windows.go    Win32: prende o widget à área de trabalho e ajusta o menu da bandeja
 migrar_windows.go     migração da versão com o nome antigo (CultoScript)
 frontend/             widget (widget.*) e editor (editor.*), com as fontes embutidas

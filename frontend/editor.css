@@ -56,6 +56,13 @@ svg { width: 18px; height: 18px; fill: currentColor; flex: none; }
 }
 .marca strong { display: block; font-size: 15px; }
 .marca small { display: block; color: var(--suave); font-size: 12px; }
+.marca .versao {
+  margin-left: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--suave);
+  font-variant-numeric: tabular-nums;
+}
 /* Selo "7": a mesma imagem do ícone do app (com centralização óptica). */
 .sete {
   flex: none;
@@ -463,3 +470,37 @@ input:not([type]):focus { border-color: var(--azul); background: var(--superfici
 .faixa input { accent-color: var(--azul); }
 .faixa output { font-variant-numeric: tabular-nums; color: var(--suave); text-align: right; font-size: 12px; }
 .nota { margin: 0 0 12px; color: var(--suave); line-height: 1.5; }
+.nota code { font-family: Consolas, monospace; font-size: 12.5px; }
+
+/* Exportar / importar */
+.linha-acoes { display: flex; flex-wrap: wrap; gap: 8px; }
+.btn-primario {
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--azul);
+  color: #fff;
+  font-weight: 600;
+}
+.btn-primario:hover { filter: brightness(1.08); }
+.confirmar-importacao {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 12px 14px;
+  border: 1px solid color-mix(in srgb, var(--vermelho) 40%, var(--linha));
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--vermelho) 7%, transparent);
+  line-height: 1.45;
+}
+.confirmar-importacao .btn-fantasma { width: auto; border-style: solid; }
+.aviso {
+  margin: 12px 0 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--suave);
+  word-break: break-all;
+}
+.aviso.ok { color: var(--azul); }
+.aviso.erro { color: var(--vermelho); }
