@@ -1,0 +1,226 @@
+/* ── Cores ─────────────────────────────────────────────────
+   O JS define só --fundo, --texto e --acento (da paleta do modo
+   ativo) e data-modo="claro|escuro"; o resto é derivado aqui. */
+:root {
+  --op: 0.88;
+  --escala: 1;
+  --pad-janela: 14px;
+  --fundo: #0b1630;
+  --texto: #eef2fb;
+  --acento: #dcbb72;
+
+  --fundo-a: color-mix(in srgb, var(--fundo), white 7%);
+  --fundo-b: color-mix(in srgb, var(--fundo), black 22%);
+  --suave: color-mix(in srgb, var(--texto) 60%, var(--fundo));
+  --linha: color-mix(in srgb, var(--texto) 9%, transparent);
+  --borda: color-mix(in srgb, var(--texto) 11%, transparent);
+  --aba-ativa-fundo: color-mix(in srgb, var(--acento) 16%, transparent);
+  --sombra: rgba(0, 0, 0, 0.45);
+}
+[data-modo="claro"] {
+  --fundo-a: color-mix(in srgb, var(--fundo), white 60%);
+  --fundo-b: color-mix(in srgb, var(--fundo), black 3%);
+  --borda: rgba(255, 255, 255, 0.7);
+  --sombra: rgba(10, 20, 50, 0.22);
+}
+
+/* ── Base ──────────────────────────────────────────────── */
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body {
+  margin: 0;
+  background: transparent;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: default;
+}
+body {
+  padding: var(--pad-janela);
+  font-family: "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
+  color: var(--texto);
+  font-size: calc(13.5px * var(--escala));
+  -webkit-font-smoothing: antialiased;
+}
+
+.card {
+  position: relative;
+  border-radius: 22px;
+  padding: calc(20px * var(--escala)) calc(22px * var(--escala)) calc(24px * var(--escala));
+  background: linear-gradient(165deg,
+    rgb(from var(--fundo-a) r g b / var(--op)),
+    rgb(from var(--fundo-b) r g b / var(--op)));
+  border: 1px solid var(--borda);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 8px 22px var(--sombra);
+  overflow: hidden;
+}
+.card::before { /* brilho sutil no topo */
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--acento) 55%, transparent), transparent);
+  opacity: 0.6;
+}
+
+/* ── Cabeçalho ─────────────────────────────────────────── */
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.68em;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--suave);
+}
+/* Selo "7": a mesma imagem do ícone do app (com centralização óptica). */
+.sete {
+  display: inline-block;
+  width: 2.2em;
+  height: 2.2em;
+  background: url("img/sete.png") center / contain no-repeat;
+  color: transparent;
+  overflow: hidden;
+}
+.titulo-linha {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 0.45em;
+}
+h1 {
+  margin: 0;
+  font-family: "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 1.5em;
+  line-height: 1.15;
+}
+.hoje {
+  flex: none;
+  font-size: 0.8em;
+  font-weight: 600;
+  color: var(--acento);
+  background: color-mix(in srgb, var(--acento) 14%, transparent);
+  border-radius: 999px;
+  line-height: 1;
+  /* recorta a caixa do texto na altura das maiúsculas: o padding
+     fica igual em cima e embaixo e o texto, opticamente centrado */
+  text-box: trim-both cap alphabetic;
+  padding: 0.42em 0.7em;
+}
+
+/* ── Abas ──────────────────────────────────────────────── */
+.abas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 1em;
+}
+.abas button {
+  --wails-draggable: no-drag;
+  font: inherit;
+  font-size: 0.8em;
+  font-weight: 600;
+  color: var(--suave);
+  background: transparent;
+  border: 1px solid var(--linha);
+  border-radius: 999px;
+  padding: 0.35em 0.95em;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.abas button:hover { color: var(--texto); border-color: var(--borda); }
+.abas button[aria-selected="true"] {
+  color: var(--acento);
+  background: var(--aba-ativa-fundo);
+  border-color: transparent;
+}
+
+/* ── Seções e etapas ───────────────────────────────────── */
+.conteudo { margin-top: 0.3em; }
+.secao { margin-top: 1em; min-width: 0; }
+body.duas-colunas .conteudo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+  column-gap: 1.8em;
+}
+.secao h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 0.45em;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.32em;
+  color: var(--acento);
+}
+.secao h2::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--acento) 40%, transparent), transparent);
+}
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+li {
+  display: grid;
+  grid-template-columns: 2.1em 1fr;
+  align-items: baseline;
+  padding: 0.28em 0;
+  border-bottom: 1px solid var(--linha);
+  line-height: 1.25;
+}
+li:last-child { border-bottom: 0; }
+.n {
+  font-size: 0.78em;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--suave);
+  opacity: 0.8;
+}
+.vazio {
+  margin: 1.2em 0 0.4em;
+  color: var(--suave);
+  font-style: italic;
+}
+
+/* ── Modo edição ───────────────────────────────────────── */
+.dica-edicao { display: none; }
+body.editando .card {
+  --wails-draggable: drag;
+  cursor: move;
+  padding-bottom: calc(14px * var(--escala));
+}
+body.editando .dica-edicao {
+  display: block;
+  margin: 1.3em 0 0;
+  text-align: center;
+  font-size: 0.72em;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--acento);
+}
+
+/* Se a programação for maior que a tela, só o conteúdo rola. */
+.card {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 2 * var(--pad-janela));
+}
+.topo, .abas, .dica-edicao { flex: none; }
+.conteudo {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--linha) transparent;
+}

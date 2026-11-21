@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="pt-BR" data-tema="escuro">
+<head>
+  <meta charset="utf-8">
+  <title>CultoScript7 · Editar programação</title>
+  <link rel="stylesheet" href="fonts/fonts.css">
+  <link rel="stylesheet" href="editor.css">
+</head>
+<body>
+  <aside class="lateral">
+    <div class="marca">
+      <span class="sete">7</span>
+      <div>
+        <strong>CultoScript7</strong>
+        <small id="igreja-lateral"></small>
+      </div>
+    </div>
+
+    <div class="grupo-titulo">Cultos</div>
+    <nav id="lista-cultos" class="lista-cultos"></nav>
+
+    <div class="novo-culto">
+      <button class="btn-fantasma" id="btn-novo">+ Novo culto</button>
+      <div class="menu-novo" id="menu-novo" hidden>
+        <button data-modelo="domingo">Culto de domingo</button>
+        <button data-modelo="quarta">Culto de quarta-feira</button>
+        <button data-modelo="branco">Em branco</button>
+      </div>
+    </div>
+
+    <div class="espaco"></div>
+    <nav class="lista-cultos">
+      <button class="item-lateral" id="nav-aparencia">
+        <svg viewBox="0 -960 960 960"><path d="M433-80q-27 0-46.5-18T363-142l-9-66q-13-5-24.5-12T307-235l-62 26q-25 11-50 2t-39-32l-47-82q-14-23-8-49t27-43l53-40q-1-7-1-13.5v-27q0-6.5 1-13.5l-53-40q-21-17-27-43t8-49l47-82q14-23 39-32t50 2l62 26q11-8 23-15t24-12l9-66q4-26 23.5-44t46.5-18h94q27 0 46.5 18t23.5 44l9 66q13 5 24.5 12t22.5 15l62-26q25-11 50-2t39 32l47 82q14 23 8 49t-27 43l-53 40q1 7 1 13.5v27q0 6.5-2 13.5l53 40q21 17 27 43t-8 49l-48 82q-14 23-39 32t-50-2l-60-26q-11 8-23 15t-24 12l-9 66q-4 26-23.5 44T527-80h-94Zm49-260q58 0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Z"/></svg>
+        Configurações
+      </button>
+    </nav>
+
+    <footer class="creditos">
+      <p>
+        Desenvolvido por Pablo Almeida, para honra e glória de Deus!
+        <a href="#" id="link-projeto">
+          <svg viewBox="0 0 24 24"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.56-.29-5.25-1.28-5.25-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.7 5.38-5.27 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+          GitHub</a>
+      </p>
+    </footer>
+  </aside>
+
+  <main class="principal">
+    <header class="barra">
+      <h1 id="cabecalho">Programação</h1>
+      <span class="status" id="status">Salvo</span>
+      <button class="interruptor-tema" id="btn-tema" role="switch" aria-checked="true" title="Modo escuro do editor">
+        <svg class="sol" viewBox="0 -960 960 960"><path d="M480-360q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Zm0 80q-83 0-141.5-58.5T280-480q0-83 58.5-141.5T480-680q83 0 141.5 58.5T680-480q0 83-58.5 141.5T480-280ZM80-440q-17 0-28.5-11.5T40-480q0-17 11.5-28.5T80-520h80q17 0 28.5 11.5T200-480q0 17-11.5 28.5T160-440H80Zm720 0q-17 0-28.5-11.5T760-480q0-17 11.5-28.5T800-520h80q17 0 28.5 11.5T920-480q0 17-11.5 28.5T880-440h-80ZM480-760q-17 0-28.5-11.5T440-800v-80q0-17 11.5-28.5T480-920q17 0 28.5 11.5T520-880v80q0 17-11.5 28.5T480-760Zm0 720q-17 0-28.5-11.5T440-80v-80q0-17 11.5-28.5T480-200q17 0 28.5 11.5T520-160v80q0 17-11.5 28.5T480-40ZM226-678l-43-42q-12-11-11.5-28t11.5-29q12-12 29-12t28 12l42 43q11 12 11 28t-11 28q-11 12-27.5 11.5T226-678Zm494 495-42-43q-11-12-11-28.5t11-27.5q11-12 27.5-11.5T734-282l43 42q12 11 11.5 28T777-183q-12 12-29 12t-28-12Zm-42-495q-12-11-11.5-27.5T678-734l42-43q11-12 28-11.5t29 11.5q12 12 12 29t-12 28l-43 42q-12 11-28 11t-28-11ZM183-183q-12-12-12-29t12-28l43-42q12-11 28.5-11t27.5 11q12 11 11.5 27.5T282-226l-42 43q-11 12-28 11.5T183-183Zm297-297Z"/></svg>
+        <span class="trilho"></span>
+        <svg class="lua" viewBox="0 -960 960 960"><path d="M480-120q-150 0-255-105T120-480q0-150 105-255t255-105q14 0 27.5 1t26.5 3q-41 29-65.5 75.5T444-660q0 90 63 153t153 63q55 0 101-24.5t75-65.5q2 13 3 26.5t1 27.5q0 150-105 255T480-120Z"/></svg>
+      </button>
+    </header>
+
+    <!-- Edição de um culto -->
+    <section id="pagina-culto" class="pagina" hidden>
+      <div class="cartao campos">
+        <label>
+          <span>Nome da aba</span>
+          <input id="f-aba" maxlength="24" placeholder="Sábado">
+        </label>
+        <label class="largo">
+          <span>Título no widget</span>
+          <input id="f-titulo" maxlength="60" placeholder="Programação de sábado">
+        </label>
+        <div class="campo-dia">
+          <span>Dia da semana <em>o widget abre neste culto no dia certo</em></span>
+          <div class="segmentado" id="f-dia"></div>
+        </div>
+      </div>
+
+      <div id="secoes"></div>
+
+      <div class="acoes-rodape">
+        <button class="btn-secundario" id="btn-nova-secao">+ Nova seção</button>
+        <span class="espaco"></span>
+        <button class="btn-perigo" id="btn-excluir-culto">Excluir este culto</button>
+        <span class="confirmar" id="confirmar-exclusao" hidden>
+          Excluir mesmo?
+          <button class="btn-perigo cheio" id="btn-confirmar-exclusao">Sim, excluir</button>
+          <button class="btn-fantasma" id="btn-cancelar-exclusao">Cancelar</button>
+        </span>
+      </div>
+    </section>
+
+    <!-- Aparência -->
+    <section id="pagina-aparencia" class="pagina" hidden>
+      <div class="cartao">
+        <h2>Identificação</h2>
+        <label class="bloco">
+          <span>Nome da igreja</span>
+          <input id="a-igreja" maxlength="50">
+        </label>
+      </div>
+
+      <div class="cartao">
+        <h2>Modo</h2>
+        <div class="segmentado" id="a-modo">
+          <button data-modo="auto">Automático (segue o Windows)</button>
+          <button data-modo="claro">Claro</button>
+          <button data-modo="escuro">Escuro</button>
+        </div>
+      </div>
+
+      <div class="cartao">
+        <div class="cartao-topo">
+          <h2>Cores</h2>
+          <button class="btn-secundario pequeno" id="a-restaurar-cores">Restaurar padrões</button>
+        </div>
+        <p class="nota">Cada modo tem suas próprias cores. Escolha uma paleta pronta ou ajuste fundo, texto e destaque.</p>
+        <div class="paletas" id="a-paletas"></div>
+      </div>
+
+      <div class="cartao">
+        <div class="cartao-topo">
+          <h2>Layout e tamanho</h2>
+          <button class="btn-secundario pequeno" id="a-restaurar-layout">Restaurar padrões</button>
+        </div>
+        <div class="faixa">
+          <span>Seções</span>
+          <div class="segmentado" id="a-colunas">
+            <button data-colunas="1">Uma abaixo da outra</button>
+            <button data-colunas="2">Lado a lado</button>
+          </div>
+        </div>
+        <label class="faixa">
+          <span>Largura do widget</span>
+          <input type="range" id="a-largura" min="300" max="900" step="10">
+          <output id="o-largura"></output>
+        </label>
+        <label class="faixa">
+          <span>Tamanho do texto</span>
+          <input type="range" id="a-escala" min="0.85" max="1.4" step="0.05">
+          <output id="o-escala"></output>
+        </label>
+        <label class="faixa">
+          <span>Opacidade do fundo</span>
+          <input type="range" id="a-opacidade" min="0.4" max="1" step="0.02">
+          <output id="o-opacidade"></output>
+        </label>
+      </div>
+
+      <div class="cartao">
+        <h2>Posição</h2>
+        <p class="nota">Com esta janela aberta, o widget fica com borda tracejada: arraste-o na área de trabalho para o lugar que quiser. A posição é salva ao soltar.</p>
+        <button class="btn-secundario" id="a-restaurar">Voltar ao canto superior direito</button>
+      </div>
+    </section>
+  </main>
+
+  <template id="tpl-secao">
+    <div class="cartao secao">
+      <div class="secao-topo">
+        <input class="secao-titulo" maxlength="60" placeholder="Nome da seção (ex.: Culto Divino)">
+        <div class="ferramentas">
+          <button class="icone" data-acao="sobe" title="Mover seção para cima"><svg viewBox="0 -960 960 960"><path d="M450-613 302-465q-9 9-21 9t-21-9q-9-9-9-21.5t9-21.5l199-199q5-5 10-7t11-2q6 0 11 2t10 7l199 199q9 9 9 21.5t-9 21.5q-9 9-21.5 9t-21.5-9L510-613v393q0 13-8.5 21.5T480-190q-13 0-21.5-8.5T450-220v-393Z"/></svg></button>
+          <button class="icone" data-acao="desce" title="Mover seção para baixo"><svg viewBox="0 -960 960 960"><path d="M450-347v-393q0-13 8.5-21.5T480-770q13 0 21.5 8.5T510-740v393l148-148q9-9 21-9t21 9q9 9 9 21.5t-9 21.5L501-253q-5 5-10 7t-11 2q-6 0-11-2t-10-7L260-452q-9-9-9-21.5t9-21.5q9-9 21-9t21 9l148 148Z"/></svg></button>
+          <button class="icone perigo" data-acao="remove" title="Excluir seção"><svg viewBox="0 -960 960 960"><path d="M261-120q-24.75 0-42.37-17.63Q201-155.25 201-180v-570h-11q-12.75 0-21.37-8.68-8.63-8.67-8.63-21.5 0-12.82 8.63-21.32 8.62-8.5 21.37-8.5h158q0-13 8.63-21.5 8.62-8.5 21.37-8.5h204q12.75 0 21.38 8.62Q612-822.75 612-810h158q12.75 0 21.38 8.68 8.62 8.67 8.62 21.5 0 12.82-8.62 21.32-8.63 8.5-21.38 8.5h-11v570q0 24.75-17.62 42.37Q723.75-120 699-120H261Zm126-178q0 12.75 8.68 21.37 8.67 8.63 21.5 8.63 12.82 0 21.32-8.63 8.5-8.62 8.5-21.37v-339q0-12.75-8.68-21.38-8.67-8.62-21.5-8.62-12.82 0-21.32 8.62-8.5 8.63-8.5 21.38v339Zm126 0q0 12.75 8.68 21.37 8.67 8.63 21.5 8.63 12.82 0 21.32-8.63 8.5-8.62 8.5-21.37v-339q0-12.75-8.68-21.38-8.67-8.62-21.5-8.62-12.82 0-21.32 8.62-8.5 8.63-8.5 21.38v339Z"/></svg></button>
+        </div>
+      </div>
+      <ol class="itens"></ol>
+      <button class="btn-adicionar">+ Adicionar etapa</button>
+    </div>
+  </template>
+
+  <template id="tpl-item">
+    <li class="item">
+      <span class="num"></span>
+      <input class="item-texto" maxlength="80" placeholder="Nova etapa">
+      <div class="ferramentas">
+        <button class="icone" data-acao="sobe" title="Mover para cima" tabindex="-1"><svg viewBox="0 -960 960 960"><path d="M450-613 302-465q-9 9-21 9t-21-9q-9-9-9-21.5t9-21.5l199-199q5-5 10-7t11-2q6 0 11 2t10 7l199 199q9 9 9 21.5t-9 21.5q-9 9-21.5 9t-21.5-9L510-613v393q0 13-8.5 21.5T480-190q-13 0-21.5-8.5T450-220v-393Z"/></svg></button>
+        <button class="icone" data-acao="desce" title="Mover para baixo" tabindex="-1"><svg viewBox="0 -960 960 960"><path d="M450-347v-393q0-13 8.5-21.5T480-770q13 0 21.5 8.5T510-740v393l148-148q9-9 21-9t21 9q9 9 9 21.5t-9 21.5L501-253q-5 5-10 7t-11 2q-6 0-11-2t-10-7L260-452q-9-9-9-21.5t9-21.5q9-9 21-9t21 9l148 148Z"/></svg></button>
+        <button class="icone perigo" data-acao="remove" title="Remover etapa" tabindex="-1"><svg viewBox="0 -960 960 960"><path d="M480-438 270-228q-9 9-21 9t-21-9q-9-9-9-21t9-21l210-210-210-210q-9-9-9-21t9-21q9-9 21-9t21 9l210 210 210-210q9-9 21-9t21 9q9 9 9 21t-9 21L522-480l210 210q9 9 9 21t-9 21q-9 9-21 9t-21-9L480-438Z"/></svg></button>
+      </div>
+    </li>
+  </template>
+
+  <script type="module" src="editor.js"></script>
+</body>
+</html>
