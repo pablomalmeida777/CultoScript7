@@ -133,6 +133,17 @@ Não é um widget nativo do painel do Windows 11. É uma janela sem moldura e co
 
 Contribuições são bem-vindas: abra uma *issue* ou envie um *pull request*.
 
+## Code signing policy
+
+Free code signing provided by [SignPath.io](https://about.signpath.io), certificate by [SignPath Foundation](https://signpath.org).
+
+- **Committers and reviewers:** [Pablo Almeida](https://github.com/pablomalmeida777)
+- **Approvers:** [Pablo Almeida](https://github.com/pablomalmeida777)
+
+**Privacidade:** this program will not transfer any information to other networked systems unless specifically requested by the user or the person installing or operating it. O CultoScript7 não coleta nem envia dados. Se faltar o Microsoft Edge WebView2, o instalador o baixa da Microsoft ([declaração de privacidade](https://privacy.microsoft.com/privacystatement)).
+
+Site do projeto: https://pablomalmeida777.github.io/CultoScript7/
+
 ## Licença
 
 [MIT](LICENSE). Use, modifique e distribua livremente.
