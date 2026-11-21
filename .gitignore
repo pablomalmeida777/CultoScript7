@@ -1,0 +1,6 @@
+bin/
+*.syso
+# cópia limpa para upload pelo navegador (não versionar)
+CultoScript7-upload/
+# gerado pelo build.ps1 -Instalador (wails3 generate webview2bootstrapper)
+build/windows/nsis/MicrosoftEdgeWebview2Setup.exe
