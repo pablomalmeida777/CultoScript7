@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Pacote MSIX do CultoScript7 para a Microsoft Store.
+  Gerado por: .\build.ps1 -Loja   (saída: bin\CultoScript7.msix)
+  __VERSAO__ é substituído pela versão no build (formato 1.2.3).
+  Identity/Publisher vêm do Partner Center (Gerenciamento de produto → Identidade do produto).
+-->
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  IgnorableNamespaces="uap uap5 rescap">
+
+  <Identity
+    Name="PabloModestodeAlmeida.CultoScript7"
+    Publisher="CN=68E716BE-277A-4656-B6C9-BFAC73F71B65"
+    Version="__VERSAO__.0"
+    ProcessorArchitecture="x64" />
+
+  <Properties>
+    <DisplayName>CultoScript7</DisplayName>
+    <PublisherDisplayName>Pablo Modesto de Almeida</PublisherDisplayName>
+    <Description>A programação do culto sempre à vista, direto na área de trabalho.</Description>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.19041.0" MaxVersionTested="10.0.26100.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="pt-br" />
+  </Resources>
+
+  <Applications>
+    <!-- Uma entrada só (a Store não aceita entradas sem ícone no Menu Iniciar).
+         O próprio app decide se abre o editor: ver iniciadoNoLogon() em desktop_windows.go. -->
+    <Application Id="CultoScript7" Executable="CultoScript7.exe" EntryPoint="Windows.FullTrustApplication">
+      <uap:VisualElements
+        DisplayName="CultoScript7"
+        Description="A programação do culto sempre à vista, direto na área de trabalho."
+        BackgroundColor="transparent"
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" />
+      </uap:VisualElements>
+      <Extensions>
+        <uap5:Extension Category="windows.startupTask" Executable="CultoScript7.exe" EntryPoint="Windows.FullTrustApplication">
+          <uap5:StartupTask TaskId="CultoScript7Widget" Enabled="true" DisplayName="CultoScript7" />
+        </uap5:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <rescap:Capability Name="runFullTrust" />
+  </Capabilities>
+</Package>

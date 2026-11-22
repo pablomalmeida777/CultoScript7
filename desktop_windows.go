@@ -3,7 +3,9 @@
 package main
 
 import (
+	"strings"
 	"syscall"
+	"time"
 	"unsafe"
 
 	"golang.org/x/sys/windows"
@@ -206,6 +208,70 @@ func mostrarMenu(dono uintptr, itens []ItemMenu) func() {
 		return itens[cmd-1].Acao
 	}
 	return nil
+}
+
+// ── Instalação pela Microsoft Store (MSIX) ──────────────────
+
+var procGetCurrentPackageFullName = windows.NewLazySystemDLL("kernel32.dll").NewProc("GetCurrentPackageFullName")
+
+// empacotado informa se o app roda como pacote MSIX (versão da Microsoft
+// Store). Nesse caso a inicialização com o Windows é feita pela StartupTask
+// declarada no AppxManifest, e não pela chave Run do registro.
+func empacotado() bool {
+	const appmodelErrorNoPackage = 15700
+	var n uint32
+	r, _, _ := procGetCurrentPackageFullName.Call(uintptr(unsafe.Pointer(&n)), 0)
+	return r != appmodelErrorNoPackage
+}
+
+// iniciadoNoLogon diz se o app foi aberto logo após o login (inicialização
+// automática). Na versão da Store a mesma entrada serve para o Menu Iniciar
+// e para a StartupTask, sem argumentos; então usamos a hora em que o
+// explorer.exe desta sessão começou (≈ hora do login) para diferenciar.
+func iniciadoNoLogon() bool {
+	inicio, ok := inicioDoExplorer()
+	if !ok {
+		return false
+	}
+	return time.Since(inicio) < 3*time.Minute
+}
+
+func inicioDoExplorer() (time.Time, bool) {
+	var sessao uint32
+	if err := windows.ProcessIdToSessionId(windows.GetCurrentProcessId(), &sessao); err != nil {
+		return time.Time{}, false
+	}
+	snap, err := windows.CreateToolhelp32Snapshot(windows.TH32CS_SNAPPROCESS, 0)
+	if err != nil {
+		return time.Time{}, false
+	}
+	defer windows.CloseHandle(snap)
+
+	var mais time.Time
+	var pe windows.ProcessEntry32
+	pe.Size = uint32(unsafe.Sizeof(pe))
+	for err = windows.Process32First(snap, &pe); err == nil; err = windows.Process32Next(snap, &pe) {
+		if !strings.EqualFold(windows.UTF16ToString(pe.ExeFile[:]), "explorer.exe") {
+			continue
+		}
+		var s uint32
+		if windows.ProcessIdToSessionId(pe.ProcessID, &s) != nil || s != sessao {
+			continue
+		}
+		h, err := windows.OpenProcess(windows.PROCESS_QUERY_LIMITED_INFORMATION, false, pe.ProcessID)
+		if err != nil {
+			continue
+		}
+		var criado, saida, kernel, usuario windows.Filetime
+		if windows.GetProcessTimes(h, &criado, &saida, &kernel, &usuario) == nil {
+			t := time.Unix(0, criado.Nanoseconds())
+			if mais.IsZero() || t.Before(mais) {
+				mais = t // o explorer mais antigo da sessão = o do login
+			}
+		}
+		windows.CloseHandle(h)
+	}
+	return mais, !mais.IsZero()
 }
 
 // fixarNaAreaDeTrabalho deve rodar na thread da UI (application.InvokeSync).

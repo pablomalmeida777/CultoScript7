@@ -36,6 +36,7 @@ func main() {
 	opticoX := flag.Float64("opticox", 1.0, "compensação óptica horizontal do ícone do app (0 = caixa, 1 = centro de massa)")
 	opticoY := flag.Float64("opticoy", 0.25, "compensação óptica vertical do ícone do app (0 = caixa, 1 = centro de massa)")
 	saida := flag.String("saida", ".", "pasta base de saída")
+	quadrado := flag.String("quadrado", "", "também gera uma versão sem cantos arredondados neste caminho (artes da Store)")
 	flag.Parse()
 	must(os.Chdir(*saida))
 
@@ -65,6 +66,13 @@ func main() {
 	must(save(app, "build/appicon.png"))
 	// Deslocamento em fração do lado do ícone, para replicar nos selos em CSS.
 	fmt.Printf("deslocamento óptico: x %+.4f, y %+.4f (fração do lado)\n", dx/N, dy/N)
+
+	if *quadrado != "" {
+		q := image.NewRGBA(image.Rect(0, 0, N, N))
+		draw.Draw(q, q.Bounds(), image.NewUniform(azul), image.Point{}, draw.Src)
+		drawGlyph(q, segs, float64(N)**appFill, color.White, *opticoX, *opticoY)
+		must(save(q, *quadrado))
+	}
 
 	// Bandeja: só o caractere (sem fundo), centralizado pela caixa.
 	for name, c := range map[string]color.Color{

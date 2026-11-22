@@ -1,0 +1,22 @@
+# CultoScript7
+
+> CultoScript7 é um widget gratuito e de código aberto para Windows 10 e 11 que mostra a programação do culto (ordem do culto, liturgia) na área de trabalho, para a equipe de som, mídia e plataforma da igreja acompanhar cada etapa. Disponível na Microsoft Store.
+
+- Fica na área de trabalho, atrás das outras janelas, sem ocupar a barra de tarefas; inicia junto com o Windows.
+- Vários cultos em abas (sábado, domingo, quarta-feira…), com abertura automática no culto do dia.
+- Editor de seções e etapas com salvamento automático; exportar e importar cultos em arquivo .json.
+- Modo claro e escuro (pode seguir o Windows), cores personalizáveis, largura, tamanho do texto e uma ou duas colunas.
+- Funciona offline, sem conta, sem anúncios e sem coletar dados. Licença MIT.
+- Feito em Go com Wails v3 (interface em HTML/CSS/JS sobre WebView2). Desenvolvido por Pablo Almeida.
+
+## Download
+
+- [Microsoft Store](https://apps.microsoft.com/detail/9nk3h7mn78fk): instalação recomendada, com atualizações automáticas
+- [GitHub Releases](https://github.com/pablomalmeida777/CultoScript7/releases/latest): instalador CultoScript7-Setup.exe
+
+## Links
+
+- [Site](https://cultoscript7.pages.dev/)
+- [Código-fonte](https://github.com/pablomalmeida777/CultoScript7)
+- [README](https://github.com/pablomalmeida777/CultoScript7/blob/main/README.md): instalação, uso, exportar/importar e instruções de build
+- [Licença MIT](https://github.com/pablomalmeida777/CultoScript7/blob/main/LICENSE)

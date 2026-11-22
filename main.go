@@ -86,7 +86,8 @@ func main() {
 			//    se o app já estiver rodando, a 2ª instância cai em OnSecondInstanceLaunch;
 			//  - na primeira execução (logo após instalar): o widget fica atrás de
 			//    todas as janelas, então sem o editor pareceria que nada abriu.
-			if temArg("--editar") || c.store.PrimeiraVez {
+			//  - na versão da Store, quando aberto pelo Menu Iniciar (fora do login).
+			if temArg("--editar") || c.store.PrimeiraVez || (empacotado() && !iniciadoNoLogon()) {
 				c.abrirEditor()
 			}
 		}()
@@ -327,7 +328,9 @@ func executavelTemporario() bool {
 // garantirAutostart registra o app para iniciar com o Windows a cada execução
 // (assim o registro acompanha o executável se ele mudar de pasta).
 func (c *CultoApp) garantirAutostart() {
-	if executavelTemporario() {
+	// Versão da Microsoft Store: quem inicia com o Windows é a StartupTask
+	// do pacote (build/windows/msix/AppxManifest.xml).
+	if executavelTemporario() || empacotado() {
 		return
 	}
 	if err := c.app.Autostart.Enable(); err != nil {

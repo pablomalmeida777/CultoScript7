@@ -3,9 +3,112 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CultoScript7: a programação do culto na área de trabalho</title>
-  <meta name="description" content="Widget gratuito e de código aberto para Windows que mostra a programação do culto na área de trabalho.">
+  <title>CultoScript7: programação do culto na área de trabalho do Windows</title>
+  <meta name="description" content="Widget gratuito para Windows que mostra a programação e a ordem do culto na área de trabalho. Ideal para a equipe de som, mídia e plataforma da igreja. Disponível na Microsoft Store.">
+  <meta name="keywords" content="programação do culto, ordem do culto, liturgia, igreja, widget, Windows, escola sabatina, culto divino, mídia da igreja, sonoplastia">
+  <meta name="author" content="Pablo Almeida">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#1d5fd6">
+  <link rel="canonical" href="https://cultoscript7.pages.dev/">
+
   <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+  <!-- Prévia ao compartilhar (WhatsApp, Facebook, LinkedIn, X…) -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="CultoScript7">
+  <meta property="og:url" content="https://cultoscript7.pages.dev/">
+  <meta property="og:title" content="CultoScript7: a programação do culto na área de trabalho">
+  <meta property="og:description" content="Widget gratuito para Windows que deixa a programação do culto sempre à vista. Disponível na Microsoft Store.">
+  <meta property="og:image" content="https://cultoscript7.pages.dev/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Ícone do CultoScript7 e o widget com a programação de sábado">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CultoScript7: a programação do culto na área de trabalho">
+  <meta name="twitter:description" content="Widget gratuito para Windows que deixa a programação do culto sempre à vista.">
+  <meta name="twitter:image" content="https://cultoscript7.pages.dev/og.png">
+
+  <!-- Dados estruturados (Google e outros buscadores) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://cultoscript7.pages.dev/#app",
+        "name": "CultoScript7",
+        "description": "Widget gratuito para Windows que mostra a programação do culto (liturgia) na área de trabalho, com editor de seções e etapas, vários cultos em abas, modo claro e escuro e exportação de cultos.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Windows 10, Windows 11",
+        "softwareVersion": "1.2.1",
+        "inLanguage": "pt-BR",
+        "isAccessibleForFree": true,
+        "license": "https://opensource.org/licenses/MIT",
+        "url": "https://cultoscript7.pages.dev/",
+        "downloadUrl": "https://apps.microsoft.com/detail/9nk3h7mn78fk",
+        "installUrl": "https://apps.microsoft.com/detail/9nk3h7mn78fk",
+        "image": "https://cultoscript7.pages.dev/icone.png",
+        "screenshot": [
+          "https://cultoscript7.pages.dev/widget-claro.png",
+          "https://cultoscript7.pages.dev/widget-escuro.png",
+          "https://cultoscript7.pages.dev/editor.png"
+        ],
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "BRL" },
+        "author": { "@id": "https://cultoscript7.pages.dev/#autor" },
+        "sameAs": [
+          "https://apps.microsoft.com/detail/9nk3h7mn78fk",
+          "https://github.com/pablomalmeida777/CultoScript7"
+        ]
+      },
+      {
+        "@type": "Person",
+        "@id": "https://cultoscript7.pages.dev/#autor",
+        "name": "Pablo Almeida",
+        "url": "https://github.com/pablomalmeida777"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://cultoscript7.pages.dev/#site",
+        "url": "https://cultoscript7.pages.dev/",
+        "name": "CultoScript7",
+        "inLanguage": "pt-BR"
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://cultoscript7.pages.dev/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "O CultoScript7 é gratuito?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Sim. É gratuito, sem anúncios e de código aberto (licença MIT)." }
+          },
+          {
+            "@type": "Question",
+            "name": "Funciona sem internet?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Sim. Funciona totalmente offline, sem conta e sem coletar dados." }
+          },
+          {
+            "@type": "Question",
+            "name": "Serve para qualquer igreja?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Sim. Ele vem com uma programação de sábado de exemplo, mas qualquer igreja pode trocar o nome, editar as etapas e criar cultos para outros dias da semana." }
+          },
+          {
+            "@type": "Question",
+            "name": "Em quais versões do Windows funciona?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No Windows 10 e no Windows 11, em computadores de 64 bits." }
+          },
+          {
+            "@type": "Question",
+            "name": "Como levar a programação para outro computador?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Em Configurações, use Exportar cultos para salvar um arquivo .json e, no outro computador, Importar cultos." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
   <style>
     :root {
       --fundo: #f6f7fb;
@@ -83,6 +186,10 @@
       color: var(--suave);
     }
 
+    .faq { max-width: 680px; margin: 0 auto; display: grid; gap: 10px; }
+    .faq details { padding: 14px 18px; border: 1px solid var(--linha); border-radius: 12px; background: var(--superficie); }
+    .faq summary { cursor: pointer; font-weight: 600; }
+    .faq p { margin: 10px 0 0; color: var(--suave); }
     .texto { max-width: 640px; margin: 0 auto 12px; color: var(--suave); text-align: center; }
     .papeis { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin: 8px 0 16px; }
     .papeis div { padding: 12px 18px; border: 1px solid var(--linha); border-radius: 12px; background: var(--superficie); text-align: center; }
@@ -94,20 +201,20 @@
 </head>
 <body>
   <header class="conteudo">
-    <img src="icone.png" alt="Ícone do CultoScript7">
+    <img src="icone.png" alt="Ícone do CultoScript7" width="88" height="88">
     <h1>CultoScript7</h1>
     <p class="chamada">A programação do culto sempre à vista, direto na área de trabalho do Windows.</p>
     <div class="botoes">
-      <a class="botao principal" href="https://github.com/pablomalmeida777/CultoScript7/releases/latest">Baixar para Windows</a>
-      <a class="botao secundario" href="https://github.com/pablomalmeida777/CultoScript7">Código no GitHub</a>
+      <a class="botao principal" href="https://apps.microsoft.com/detail/9nk3h7mn78fk">Baixar na Microsoft Store</a>
+      <a class="botao secundario" href="https://github.com/pablomalmeida777/CultoScript7/releases/latest">Baixar no GitHub</a>
     </div>
-    <p class="requisito">Gratuito · Windows 10 e 11 (64 bits)</p>
+    <p class="requisito">Gratuito · Windows 10 e 11 (64 bits) · <a href="https://github.com/pablomalmeida777/CultoScript7">Código-fonte</a></p>
   </header>
 
   <main class="conteudo">
     <div class="prints">
-      <img src="widget-claro.png" alt="Widget do CultoScript7 no modo claro">
-      <img src="widget-escuro.png" alt="Widget do CultoScript7 no modo escuro">
+      <img src="widget-claro.png" alt="Widget do CultoScript7 no modo claro" width="604" height="956">
+      <img src="widget-escuro.png" alt="Widget do CultoScript7 no modo escuro" width="604" height="956">
     </div>
 
     <section>
@@ -124,17 +231,30 @@
 
     <section>
       <h2>O editor</h2>
-      <img class="editor" src="editor.png" alt="Editor de programação do CultoScript7">
+      <img class="editor" src="editor.png" alt="Editor de programação do CultoScript7" width="1330" height="1020" loading="lazy">
     </section>
 
     <section>
       <h2>Como instalar</h2>
+      <p class="texto"><strong>Pela <a href="https://apps.microsoft.com/detail/9nk3h7mn78fk">Microsoft Store</a> (recomendado):</strong> clique em Instalar. As atualizações chegam sozinhas.</p>
+      <p class="texto"><strong>Pelo GitHub:</strong></p>
       <ol class="passos">
         <li>Baixe o <strong>CultoScript7-Setup.exe</strong> na <a href="https://github.com/pablomalmeida777/CultoScript7/releases/latest">página de downloads</a>.</li>
         <li>Abra o arquivo e siga os passos do instalador.</li>
         <li>Personalize a programação no editor. O widget passa a iniciar junto com o Windows.</li>
       </ol>
-      <p class="nota">Se o Windows mostrar <em>“O Windows protegeu o computador”</em>, clique em <strong>Mais informações → Executar assim mesmo</strong>. O aviso aparece com programas novos, ainda pouco baixados.</p>
+      <p class="nota">No download pelo GitHub, se o Windows mostrar <em>“O Windows protegeu o computador”</em>, clique em <strong>Mais informações → Executar assim mesmo</strong>. Isso não acontece na Microsoft Store.</p>
+    </section>
+
+    <section id="perguntas">
+      <h2>Perguntas frequentes</h2>
+      <div class="faq">
+        <details><summary>O CultoScript7 é gratuito?</summary><p>Sim. É gratuito, sem anúncios e de código aberto (licença MIT).</p></details>
+        <details><summary>Funciona sem internet?</summary><p>Sim. Funciona totalmente offline, sem conta e sem coletar dados.</p></details>
+        <details><summary>Serve para qualquer igreja?</summary><p>Sim. Ele vem com uma programação de sábado de exemplo, mas qualquer igreja pode trocar o nome, editar as etapas e criar cultos para outros dias da semana.</p></details>
+        <details><summary>Em quais versões do Windows funciona?</summary><p>No Windows 10 e no Windows 11, em computadores de 64 bits.</p></details>
+        <details><summary>Como levar a programação para outro computador?</summary><p>Em Configurações, use <strong>Exportar cultos</strong> para salvar um arquivo .json e, no outro computador, <strong>Importar cultos</strong>.</p></details>
+      </div>
     </section>
 
     <section id="privacidade">

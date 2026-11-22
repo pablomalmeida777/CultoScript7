@@ -32,6 +32,10 @@ Nasceu na IASD Solar Ville e está disponível de graça para **qualquer igreja*
 
 ## Instalação
 
+**Microsoft Store (recomendado):** [instale pela Store](https://apps.microsoft.com/detail/9nk3h7mn78fk). As atualizações chegam sozinhas, sem nenhum aviso de segurança.
+
+**Pelo GitHub:**
+
 1. Acesse a página de **[Releases](https://github.com/pablomalmeida777/CultoScript7/releases/latest)** e baixe o `CultoScript7-Setup.exe`.
 2. Abra o instalador e siga os passos. Ele instala em *Arquivos de Programas* e cria o atalho **CultoScript7** no Menu Iniciar (e, se quiser, na área de trabalho).
 3. Na última tela, deixe marcado **Abrir o CultoScript7 agora**. O widget aparece no canto superior direito da tela e, a partir daí, inicia junto com o Windows.
@@ -142,7 +146,7 @@ Free code signing provided by [SignPath.io](https://about.signpath.io), certific
 
 **Privacidade:** this program will not transfer any information to other networked systems unless specifically requested by the user or the person installing or operating it. O CultoScript7 não coleta nem envia dados. Se faltar o Microsoft Edge WebView2, o instalador o baixa da Microsoft ([declaração de privacidade](https://privacy.microsoft.com/privacystatement)).
 
-Site do projeto: https://pablomalmeida777.github.io/CultoScript7/
+Site do projeto: https://cultoscript7.pages.dev/
 
 ## Licença
 
