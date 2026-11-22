@@ -60,9 +60,16 @@ jobs:
           "VERSAO=$versao" | Out-File $env:GITHUB_ENV -Append -Encoding utf8
           Write-Host "Versão: $versao"
 
-      - name: Compilar app e instalador
+      - name: Compilar app, instalador e pacote da Store
         shell: pwsh
-        run: .\build.ps1 -Instalador -Versao $env:VERSAO
+        run: .\build.ps1 -Instalador -Loja -Versao $env:VERSAO
+
+      - name: Guardar pacote da Microsoft Store (enviar no Partner Center)
+        uses: actions/upload-artifact@v4
+        with:
+          name: CultoScript7-msix
+          path: bin/CultoScript7.msix
+          if-no-files-found: error
 
       - name: Guardar instalador (sem assinatura)
         id: sem-assinatura
