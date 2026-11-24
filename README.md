@@ -107,12 +107,12 @@ Depois, na raiz do projeto:
 
 ### Publicar uma versão
 
-O build oficial é feito pelo GitHub Actions ([`.github/workflows/release.yml`](.github/workflows/release.yml)):
-
-1. Em **Releases → Draft a new release**, crie uma tag no formato `v1.2.3` e publique.
-2. O workflow compila o app e o instalador no Windows, com a versão tirada da tag, e anexa o `CultoScript7-Setup.exe` à Release.
-
-A assinatura de código é feita pela [SignPath Foundation](https://signpath.org) quando as credenciais estão configuradas no repositório (veja o topo do workflow). Sem elas, o instalador é publicado sem assinatura.
+1. Compile com a versão nova:
+   ```powershell
+   .\build.ps1 -Instalador -Loja -Versao 1.2.3
+   ```
+2. **GitHub:** em **Releases → Draft a new release**, crie a tag `v1.2.3` e anexe o `bin\CultoScript7-Setup.exe`.
+3. **Microsoft Store:** no Partner Center, crie uma atualização e envie o `bin\CultoScript7.msix`.
 
 ### Estrutura
 
@@ -137,14 +137,9 @@ Não é um widget nativo do painel do Windows 11. É uma janela sem moldura e co
 
 Contribuições são bem-vindas: abra uma *issue* ou envie um *pull request*.
 
-## Code signing policy
+## Privacidade
 
-Free code signing provided by [SignPath.io](https://about.signpath.io), certificate by [SignPath Foundation](https://signpath.org).
-
-- **Committers and reviewers:** [Pablo Almeida](https://github.com/pablomalmeida777)
-- **Approvers:** [Pablo Almeida](https://github.com/pablomalmeida777)
-
-**Privacidade:** this program will not transfer any information to other networked systems unless specifically requested by the user or the person installing or operating it. O CultoScript7 não coleta nem envia dados. Se faltar o Microsoft Edge WebView2, o instalador o baixa da Microsoft ([declaração de privacidade](https://privacy.microsoft.com/privacystatement)).
+O CultoScript7 não coleta nem envia dados: tudo fica salvo apenas no seu computador. Se faltar o Microsoft Edge WebView2, o instalador do GitHub o baixa da Microsoft ([declaração de privacidade](https://privacy.microsoft.com/privacystatement)).
 
 Site do projeto: https://cultoscript7.pages.dev/
 
