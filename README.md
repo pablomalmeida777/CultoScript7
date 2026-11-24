@@ -109,10 +109,9 @@ Depois, na raiz do projeto:
 
 1. Compile com a versão nova:
    ```powershell
-   .\build.ps1 -Instalador -Loja -Versao 1.2.3
+   .\build.ps1 -Instalador -Versao 1.2.3
    ```
-2. **GitHub:** em **Releases → Draft a new release**, crie a tag `v1.2.3` e anexe o `bin\CultoScript7-Setup.exe`.
-3. **Microsoft Store:** no Partner Center, crie uma atualização e envie o `bin\CultoScript7.msix`.
+2. Em **Releases → Draft a new release**, crie a tag `v1.2.3` e anexe o `bin\CultoScript7-Setup.exe`.
 
 ### Estrutura
 
